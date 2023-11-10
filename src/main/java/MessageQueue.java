@@ -10,21 +10,27 @@ public class MessageQueue {
         this.queue = new LinkedList<>();
     }
 
-    public synchronized void addMessage(QueueMessage message) {
-        if (queue.size() < maxSize) {
-            queue.add(message);
-        } else {
-            // Handle the case where the queue is full
+    public synchronized void addMessage(QueueMessage message) throws InterruptedException {
+        while (queue.size() == maxSize) {
+            wait();  // Wait until there is space in the queue
         }
+        queue.add(message);
+        notifyAll();  // Notify any waiting threads that a new message has been added
     }
 
     public synchronized QueueMessage getMessageForRecipient(String recipient) {
+        QueueMessage messageToReturn = null;
         for (QueueMessage message : queue) {
             if (message.getRecipient().equals(recipient)) {
-                queue.remove(message);
-                return message;
+                messageToReturn = message;
+                break;
             }
         }
-        return null; // No message for this recipient
+        if (messageToReturn != null) {
+            System.out.println("Message received from recipient "+recipient);
+            queue.remove(messageToReturn);
+            notifyAll();  // Notify any waiting threads that space is now available in the queue
+        }
+        return messageToReturn;
     }
 }

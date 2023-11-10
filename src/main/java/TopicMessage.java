@@ -6,8 +6,8 @@ public class TopicMessage extends Message {
     private final Instant timestamp;
     private final Duration ttl; // Time to live for the message
 
-    public TopicMessage(String content, String type, Duration ttl) {
-        super(content); // Assuming the superclass Message handles content
+    public TopicMessage(String content,String header, String type, Duration ttl) {
+        super(content,header); // Assuming the superclass Message handles content
         this.type = type;
         this.timestamp = Instant.now();
         this.ttl = ttl;

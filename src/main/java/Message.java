@@ -7,6 +7,11 @@ public class Message {
         this.header = header;
     }
 
+    public Message(String content)
+    {
+        this.content=content;
+    }
+
     public String getContent() {
         return content;
     }

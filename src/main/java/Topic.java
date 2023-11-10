@@ -9,6 +9,14 @@ public class Topic {
         this.messages = new ArrayList<>();
     }
 
+    public List<TopicMessage> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<TopicMessage> messages) {
+        this.messages = messages;
+    }
+
     // Synchronized method to add a message to the topic
     public synchronized void addMessage(TopicMessage message) {
         this.messages.add(message);

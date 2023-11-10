@@ -12,10 +12,18 @@ public class Client {
 
 
     public void sendMessageToQueue(QueueMessage queueMessage) {
-        // Simulate sending a message to the queue
-        messageQueue.addMessage(queueMessage);
-        System.out.println("Client sent message to queue: " + queueMessage.getContent());
+        try {
+            // Simulate sending a message to the queue
+            messageQueue.addMessage(queueMessage);
+            System.out.println("Client sent message to queue: " + queueMessage.getContent());
+        } catch (InterruptedException e) {
+            // Handle the interrupted exception
+            System.out.println("Thread was interrupted while sending message to queue");
+            // Optionally, you can re-interrupt the thread
+            Thread.currentThread().interrupt();
+        }
     }
+
 
     public void sendMessageToTopic(TopicMessage topicMessage) {
         // Simulate sending a message to the topic
